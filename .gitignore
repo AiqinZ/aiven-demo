@@ -1,0 +1,11 @@
+config_local.ini
+.idea/
+
+# virtual env
+venv
+__pycache__
+*.pem
+*.cert
+*.key
+*.pyc
+*.pyo

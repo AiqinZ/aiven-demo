@@ -1,0 +1,5 @@
+kafka-python
+psycopg2-binary==2.8.6
+argparse
+textwrap3
+faker

@@ -1,0 +1,50 @@
+#!/usr/bin/env python
+import argparse
+import time
+import os
+import subprocess
+import platform
+
+parser = argparse.ArgumentParser()
+subparsers = parser.add_subparsers()
+
+product_list = ('producer', 'consumer')
+home = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+def print_help():
+    """Help function if the user entered invalid operation."""
+    print('Please input a valid product: %s' % (', '.join(tuple(product_list))))
+
+def restart(app, action='restarting', start=True, stop=True):
+    """The function to run the real commands for producer and consumer."""
+    begin = time.time()
+
+    if app not in product_list:
+        print_help()
+        return
+
+    print('%s %s...' % (action, app))
+
+    # If using windows for demo, the subprocess will not use the venv which may cause issue.
+    platform_name = platform.platform().upper()
+    if platform_name.find('WINDOWS') != -1:
+        subprocess.call([r'bin\\start.bat', os.path.join(home, 'aiven_demo\\kafka\\' + app + '.py')])
+    else:
+        subprocess.call(['python', os.path.join(home, 'aiven_demo/kafka/' + app + '.py')])
+
+    end = time.time()
+    print(action + ' %s took %d seconds' % (app, end - begin))
+
+
+def do_start(args):
+    """Invoke restart to do the real work."""
+    for product in args.products:
+        restart(product, action='starting', stop=False)
+
+start_parser = subparsers.add_parser('start', help='start producer or consumer')
+start_parser.add_argument('products', nargs='*', help=(', '.join(tuple(product_list))))
+start_parser.set_defaults(func=do_start)
+
+
+args = parser.parse_args()
+args.func(args)
