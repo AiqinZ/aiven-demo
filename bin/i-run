@@ -15,7 +15,7 @@ def print_help():
     """Help function if the user entered invalid operation."""
     print('Please input a valid product: %s' % (', '.join(tuple(product_list))))
 
-def restart(app, action='restarting', start=True, stop=True):
+def restart(app, action):
     """The function to run the real commands for producer and consumer."""
     begin = time.time()
 
@@ -39,7 +39,7 @@ def restart(app, action='restarting', start=True, stop=True):
 def do_start(args):
     """Invoke restart to do the real work."""
     for product in args.products:
-        restart(product, action='starting', stop=False)
+        restart(product, action='starting')
 
 start_parser = subparsers.add_parser('start', help='start producer or consumer')
 start_parser.add_argument('products', nargs='*', help=(', '.join(tuple(product_list))))

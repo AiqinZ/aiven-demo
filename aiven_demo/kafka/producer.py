@@ -46,7 +46,7 @@ fake = Faker()
 
 
 def produce():
-"""Function using Faker library to generate events and write to topic in Kafka."""
+    """Function using Faker library to generate events and write to topic in Kafka."""
     print('producer begins')
     try:
         while True:
