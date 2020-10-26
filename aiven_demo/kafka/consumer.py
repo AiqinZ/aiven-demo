@@ -41,15 +41,18 @@ consumer = KafkaConsumer(
     ssl_certfile=param_ssl_certfile,
     ssl_keyfile=param_ssl_keyfile
 )
+def consume():
+    try:
+        print("Kafka consumer begins...")
+        for msg in consumer:
+            logger.print("Received: %s" % (msg.value))
+            customer_dict = json.loads(msg.value)
+            customer = Customer(**customer_dict)
+            customer_service = CustomerService()
+            customer_service.create_customer(customer)
+            sleep(0.5)
+    except KeyboardInterrupt as e:
+        print("Stopped.")
 
-try:
-    print("Kafka consumer begins...")
-    for msg in consumer:
-        logger.print("Received: %s" % (msg.value))
-        customer_dict = json.loads(msg.value)
-        customer = Customer(**customer_dict)
-        customer_service = CustomerService()
-        customer_service.create_customer(customer)
-        sleep(0.5)
-except KeyboardInterrupt as e:
-    print("Stopped.")
+if __name__ == '__main__':
+    consume()

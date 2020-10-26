@@ -37,14 +37,13 @@ def restart(app, action):
 
 
 def do_start(args):
-    """Invoke restart to do the real work."""
+    """Invoke function restart to do the real work."""
     for product in args.products:
         restart(product, action='starting')
 
 start_parser = subparsers.add_parser('start', help='start producer or consumer')
 start_parser.add_argument('products', nargs='*', help=(', '.join(tuple(product_list))))
 start_parser.set_defaults(func=do_start)
-
 
 args = parser.parse_args()
 args.func(args)
