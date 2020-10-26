@@ -94,4 +94,4 @@ You would see the following output::
   [2020.10.24 13:41:04]DB Inserted: insert into customers(id, first_name, last_name, address, post_code) values('18b46261-1410-11eb-9c82-b46bfc356e10','Kaitlin','Hayes','288 Lisa Stream
   Port Abigail, OK 10798','2077')
 
-From the above output, you can see that the Kafka consumer has been receiving messages and saving them to the database.
+From the above output, you can see that the Kafka consumer has been receiving messages and saving them to the database.(You can connect to PostgreSQL via applications like pgAdmin to confirm the updated database.)
